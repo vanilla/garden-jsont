@@ -10,6 +10,13 @@ The purpose of this package is to provide simple data transformation that can be
 
 The heart of this library is the `Transformer` class that takes a transformation spec in its constructor and then uses that spec to tell it how to transform data.
 
+```php
+$t = new Transformer($spec);
+$target = $t->transform($source);
+```
+
+The `Transformer` class is also callable so it can be passed as an argument that requires a callback such as `array_map`.
+
 ## Transformation Specs
 
 A transformation spec is an associated array that contains all of the keys of the target array, but with values that are JSON references to keys in the source array.
