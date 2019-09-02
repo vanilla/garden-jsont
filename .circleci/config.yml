@@ -14,7 +14,7 @@ aliases:
 jobs:
   php_setup:
     docker:
-      - image: 'circleci/7.1.31-cli-stretch'
+      - image: 'circleci/php:7.1.31-cli-stretch'
     steps:
       - core/checkout
       # We explcitly don't cache dependencies.
@@ -26,7 +26,7 @@ jobs:
             - repo
   php_71_tests:
     docker:
-      - image: 'circleci/7.1.31-cli-stretch'
+      - image: 'circleci/php:7.1.31-cli-stretch'
     steps: &php_unit_test_steps
       - *attach_workspace
       - run:
@@ -49,7 +49,7 @@ jobs:
     steps: *php_unit_test_steps
   php_73_tests:
     docker:
-      - image: 'circleci/7.3.8-cli-stretch'
+      - image: 'circleci/php:7.3.8-cli-stretch'
     steps: *php_unit_test_steps
 workflows:
   version: 2
