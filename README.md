@@ -65,4 +65,6 @@ Sometimes you might want to provide a specific literal value in the result. You 
 
 ## This Library Could Be More Useful
 
-Some people think this library is flimsy; foolish; but don't you believe it! The initial implementation of this package is intended to provide the least amount of functionality possible to be useful for 90% of use-cases. Any sensible functionality will be added as requirements evolve, as long as it adheres to the core purpose of transformations that can be expressed as plain JSON.
+Some people think this library is flimsy, foolish, and not worth worrying about. But don't you believe it! The initial implementation of this package is intended to provide the minimum amount of functionality to be useful for 90% of problems.
+
+Any sensible features will be added as requirements evolve. However, they must adhere to the core purpose of this package: transformations that can be expressed as plain JSON.
