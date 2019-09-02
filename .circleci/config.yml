@@ -36,9 +36,8 @@ jobs:
           name: Test setup
           command: |
             cd ~/workspace/repo
-      - core/prepare_php_tests
       - run:
-          name: Library Tests
+          name: PHPUnit Tests
           command: |
             cd ~/workspace/repo
             ./vendor/bin/phpunit -c phpunit.xml.dist
