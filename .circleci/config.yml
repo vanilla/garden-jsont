@@ -42,7 +42,8 @@ jobs:
             cd ~/workspace/repo
             ./vendor/bin/phpunit -c phpunit.xml.dist
   php_72_tests:
-    executor: core/php72
+    docker:
+      - image: 'circleci/php:7.2.9-cli-stretch'
     steps: *php_unit_test_steps
   php_73_tests:
     executor: core/php73
