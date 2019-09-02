@@ -66,16 +66,18 @@ final class Transformer {
                 // This is a control expression; resolve it.
                 $result = $this->resolveControlExpression($key, $spec, $data, $path);
                 break;
-            } elseif (is_string($value)) {
+            } elseif (is_string($value) || is_int($value)) {
                 // This is a reference; look it up.
                 $r = $this->resolveReference($value, $data, $data, $found);
                 if ($found) {
                     $result[$key] = $r;
                 }
             } elseif (is_array($value)) {
-                $result[$key] = $this->transformInternal($value, $data, $path . '/' . static::escapeRef($key));
+                $result[$key] = $this->transformInternal($value, $data, $path.static::escapeRef($key).'/');
             } else {
-                throw new InvalidSpecException("Invalid spec value at $path.");
+                $subpath = $path.static::escapeRef($key);
+
+                throw new InvalidSpecException("Invalid spec value at $subpath.");
             }
         }
 
@@ -94,7 +96,7 @@ final class Transformer {
     private function resolveReference(string $ref, array $context, array $root, bool &$found = null) {
         $found = true;
 
-        if (empty($ref)) {
+        if ($ref === '') {
             return $context;
         } elseif ($ref[0] === '/') {
             $ref = substr($ref, 1);

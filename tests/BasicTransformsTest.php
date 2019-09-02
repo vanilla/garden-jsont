@@ -93,4 +93,22 @@ class BasicTransformsTest extends TestCase {
         $actual = $t->transform(['a' => 'b']);
         $this->assertSame(['all' => ['a' => 'b']], $actual);
     }
+
+    /**
+     * Numeric references should work.
+     */
+    public function testNumericArray() {
+        $t = new Transformer(['/1', '/0']);
+        $actual = $t->transform(['a', 'b']);
+        $this->assertSame(['b', 'a'], $actual);
+    }
+
+    /**
+     * Relative numeric references should work.
+     */
+    public function testNumericRelativeArray() {
+        $t = new Transformer([1, 0]);
+        $actual = $t->transform(['a', 'b']);
+        $this->assertSame(['b', 'a'], $actual);
+    }
 }

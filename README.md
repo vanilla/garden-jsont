@@ -63,7 +63,7 @@ Sometimes you might want to provide a specific literal value in the result. You 
 ]
 ```
 
-## This Library Could Be More Useful
+## Why doesn't this library do enough?
 
 Some people think this library is flimsy, foolish, and not worth worrying about. But don't you believe it! The initial implementation of this package is intended to provide the minimum amount of functionality to be useful for 90% of problems.
 
