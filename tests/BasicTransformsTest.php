@@ -15,8 +15,10 @@ class BasicTransformsTest extends TestCase {
 
 
     /**
-     * @param array $spec
-     * @param array $expected
+     * Test some basic transforms.
+     *
+     * @param array $spec The spec to test.
+     * @param array $expected The expected result.
      *
      * @dataProvider provideTransformTests
      */
@@ -38,7 +40,12 @@ class BasicTransformsTest extends TestCase {
         $this->assertSame($expected, $actual);
     }
 
-    public function provideTransformTests() {
+    /**
+     * Provide basic transform tests.
+     *
+     * @return array Returns a data provider array.
+     */
+    public function provideTransformTests(): array {
         $r = [
             'basic' => [['foo' => '/bar'], ['foo' => 'foo']],
             'basic ref' => [['foo' => 'nested/bar'], ['foo' => 'foo']],

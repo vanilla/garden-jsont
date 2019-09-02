@@ -1,0 +1,6 @@
+version: 2.1
+  jobs:
+    php_72:
+      executor: core/php72
+      steps:
+        - core/checkout
