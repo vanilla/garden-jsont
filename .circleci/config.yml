@@ -13,7 +13,8 @@ aliases:
         composer install --optimize-autoloader
 jobs:
   php_setup:
-    executor: core/php71
+    docker:
+      - image: 'circleci/7.1.31-cli-stretch'
     steps:
       - core/checkout
       # We explcitly don't cache dependencies.
@@ -24,7 +25,8 @@ jobs:
           paths:
             - repo
   php_71_tests:
-    executor: core/php71
+    docker:
+      - image: 'circleci/7.1.31-cli-stretch'
     steps: &php_unit_test_steps
       - *attach_workspace
       - run:
@@ -46,7 +48,8 @@ jobs:
       - image: 'circleci/php:7.2.9-cli-stretch'
     steps: *php_unit_test_steps
   php_73_tests:
-    executor: core/php73
+    docker:
+      - image: 'circleci/7.3.8-cli-stretch'
     steps: *php_unit_test_steps
 workflows:
   version: 2
