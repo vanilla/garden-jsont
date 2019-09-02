@@ -15,11 +15,6 @@ jobs:
   php_setup:
     executor: core/php71
     steps:
-      - run:
-          name: Versions
-          command: |
-            php --version
-            composer --version
       - core/checkout
       # We explcitly don't cache dependencies.
       # The cache validation & fetching seems to take longer than fetching from source.
@@ -32,6 +27,11 @@ jobs:
     executor: core/php71
     steps: &php_unit_test_steps
       - *attach_workspace
+      - run:
+          name: Versions
+          command: |
+            php --version
+            composer --version
       - run:
           name: Test setup
           command: |
