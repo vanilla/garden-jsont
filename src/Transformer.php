@@ -168,7 +168,7 @@ final class Transformer {
             case '$literal':
                 return $spec['$literal'];
             default:
-                throw new InvalidSpecException("Invalid control expression '$expr' at $path");
+                throw new InvalidSpecException("Invalid control expression \"$expr\" at $path");
         }
     }
 }

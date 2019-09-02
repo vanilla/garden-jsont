@@ -63,12 +63,34 @@ class BasicTransformsTest extends TestCase {
     }
 
     /**
+     * Spec values can't be booleans.
+     *
      * @expectedException \Garden\JSON\InvalidSpecException
+     * @expectedExceptionMessageRegExp `^Invalid spec value`
      */
     public function testInvalidSpec() {
         $t = new Transformer(['foo' => true]);
 
-        $a = $t->transform(['baz']);
+        $t->transform(['baz']);
+    }
 
+    /**
+     * Control expressions are a whitelist.
+     *
+     * @expectedException \Garden\JSON\InvalidSpecException
+     * @expectedExceptionMessageRegExp `^Invalid control expression`
+     */
+    public function testInvalidControlExpression() {
+        $t = new Transformer(['$foo' => 'bar']);
+        $t->transform(['baz']);
+    }
+
+    /**
+     * An empty reference should return the entire input.
+     */
+    public function testEmptyRef() {
+        $t = new Transformer(['all' => '']);
+        $actual = $t->transform(['a' => 'b']);
+        $this->assertSame(['all' => ['a' => 'b']], $actual);
     }
 }
