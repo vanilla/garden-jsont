@@ -1,5 +1,10 @@
 # Garden JSON Transform
 
+[![Packagist Version](https://img.shields.io/packagist/v/vanilla/garden-jsont.svg?style=flat)](https://packagist.org/packages/vanilla/garden-jsont)
+[![MIT License](https://img.shields.io/github/license/vanilla/garden-jsont.svg)](https://github.com/vanilla/garden-jsont/blob/master/LICENSE)
+[![Build Status](https://circleci.com/gh/vanilla/garden-jsont/tree/master.svg?style=shield)](https://circleci.com/gh/vanilla/garden-jsont/tree/master)
+[![CLA](https://cla-assistant.io/readme/badge/vanilla/garden-jsont)](https://cla-assistant.io/vanilla/garden-jsont)
+
 A little library that transforms data based on a specification that can be expressed in JSON.
 
 ## Purpose
