@@ -14,11 +14,11 @@ The heart of this library is the `Transformer` class that takes a transformation
 
 A transformation spec is an associated array that contains all of the keys of the target array, but with values that are JSON references to keys in the source array.
 
-```php
-[
-    'destKey1' => '/sourceKey1',
-    'destKey2' => '/sourceKey2/sourceKey2.1',
-]
+```json
+{
+    "targetKey1": "/sourceKey1",
+    "targetKey2": "/sourceKey2/sourceKey2.1"
+}
 ```
 
 You can see from the above, you can reference a nested value using a forward slash to separate nested references.
@@ -27,40 +27,46 @@ You can see from the above, you can reference a nested value using a forward sla
 
 For complex target arrays you nest keys by structuring the target like your desired data format:
 
-```php
-[
-    'user' => [
-        'username' => '/username',
-        'fullName' => '/fullName',
-    ],
-]
+```json
+{
+    "user": {
+        "username": "/username",
+        "fullName": "/fullName"
+    }
+}
 ```
 
 ### Default Values
 
 If you reference a key that doesn't exist in the source data then it will be omitted in the transformed data. If you want to provide a default value you can use the following spec:
 
-```php
-[
-    'username' => [
-        '$ref' => '/username',
-        '$default' => 'anonymous',
-    ],
-]
+```json
+{
+    "username": {
+        "$ref": "/username",
+        "$default": "anonymous"
+    }
+}
 ```
 
 If you omit the `$default` value then the default value is assumed to be `null`.
+
+### Absolute vs. Relative References
+
+You may have noticed that the references in the examples above all start with a `/` character. This is because they are all *absolute* references. If you don't use a `/` at the beginning of your reference then you are specifying a *relative* reference.
+
+*Currently, there is no specific functionality for relative references, but it is recommended that you stick with absolute references to ensure forwards compatibility.*
 
 ### Literal Values
 
 Sometimes you might want to provide a specific literal value in the result. You can do this with the `$literal` key.
 
-```php
-[
-    'vesion' => [
-        '$literal' => '1.1',
-    ],
-]
+```json
+{
+    "version": {
+        "$literal": "1.1"
+    }
+}
 ```
 
 ## Why doesn't this library do enough?
