@@ -63,11 +63,62 @@ If you reference a key that doesn't exist in the source data then it will be omi
 
 If you omit the `$default` value then the default value is assumed to be `null`.
 
-### Absolute vs. Relative References
+### Transforming arrays with $each
 
-You may have noticed that the references in the examples above all start with a `/` character. This is because they are all *absolute* references. If you don't use a `/` at the beginning of your reference then you are specifying a *relative* reference.
+You can loop through an array and transform each item using `$each` and `$item`.
 
-*Currently, there is no specific functionality for relative references, but it is recommended that you stick with absolute references to ensure forwards compatibility.*
+```json
+{
+  "$each": "/",
+  "$item": {
+    "name": "username",
+    "id": "userID"
+  }
+}
+```
+
+The above would transform an array like this:
+
+```json
+[
+    { "username":  "bot", "userID":  1 },
+    { "username":  "dog", "userID":  2 }
+]
+```
+
+Into this:
+
+```json
+[
+    { "name":  "bot", "id":  1 },
+    { "name":  "dog", "id":  2 }
+]
+```
+
+You can aso specify a transform for the keys in an array using the `$key` attribute. Here is an example spec:
+
+```json
+{
+  "$each": "/",
+  "$item": "userID",
+  "$key": "username"
+}
+```
+
+This spec would transform the example from above into this:
+
+```json
+{
+  "bot": 1,
+  "dog": 2
+}
+```
+
+#### Absolute vs. Relative References
+
+You may have noticed that the references most of the examples all start with a `/` character. This is because they are all *absolute* references.
+
+If you don't use a `/` at the beginning of your reference then you are specifying a *relative* reference. You use relative references in the `$item` spec to refer to items within the loop.
 
 ### Literal Values
 
