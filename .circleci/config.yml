@@ -35,9 +35,10 @@ jobs:
             php --version
             composer --version
       - run:
-          name: Test setup
+          name: Static Analysis
           command: |
             cd ~/workspace/repo
+            ./vendor/bin/psalm
       - run:
           name: PHPUnit Tests
           command: |

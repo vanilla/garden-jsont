@@ -52,7 +52,7 @@ final class Transformer {
     /**
      * Transform a spec node.
      *
-     * @param array|array $spec The spec node to transform.
+     * @param int|string|array $spec The spec node to transform.
      * @param array $data The data to transform.
      * @param array $root The root of the data from the first call to `transform()`.
      * @param string $path The current spec path being transformed.
@@ -91,19 +91,21 @@ final class Transformer {
     /**
      * Resolve a JSON reference.
      *
-     * @param string $ref The reference to resolve.
+     * @param int|string $ref The reference to resolve.
      * @param mixed $context The current data context to lookup.
      * @param mixed $root The root data context for absolute references.
      * @param bool $found Set to **true** if the reference was found or **false** otherwise.
      * @return mixed Returns the value at the reference.
      */
-    private function resolveReference(string $ref, $context, $root, bool &$found = null) {
+    private function resolveReference($ref, $context, $root, bool &$found = null) {
         $found = true;
 
         if ($ref === '') {
             return $context;
         } elseif ($ref === '/') {
             return $root;
+        } elseif (is_int($ref)) {
+            return $context[$ref];
         } elseif ($ref[0] === '/') {
             $ref = substr($ref, 1);
             $context = $root;
