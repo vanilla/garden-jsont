@@ -2,7 +2,7 @@
 /**
  * @author Todd Burry <todd@vanillaforums.com>
  * @copyright 2009-2019 Vanilla Forums Inc.
- * @license Proprietary
+ * @license MIT
  */
 
 namespace Garden\JSON\Tests;
@@ -110,5 +110,11 @@ class BasicTransformsTest extends TestCase {
         $t = new Transformer([1, 0]);
         $actual = $t->transform(['a', 'b']);
         $this->assertSame(['b', 'a'], $actual);
+    }
+
+    public function testNonArrayContext() {
+        $t = new Transformer('/foo');
+        $actual = $t('baz');
+        $this->assertSame(null, $actual);
     }
 }
