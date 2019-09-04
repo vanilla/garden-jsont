@@ -190,6 +190,15 @@ final class Transformer {
         }
     }
 
+    /**
+     * Resolve an `$each` expression.
+     *
+     * @param array $spec The spec with teh `$each`.
+     * @param array $data The data being looked at.
+     * @param array $root The root of the data.
+     * @param string $path The current path.
+     * @return array|null Returns the resolved each or **null** if the array isn't found.
+     */
     private function resolveEach(array $spec, array $data, array $root, string $path) {
         if (!array_key_exists('$each', $spec)) {
             throw new InvalidSpecException("Missing key \$each at $path.");
