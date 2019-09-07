@@ -111,15 +111,13 @@ final class Transformer {
             $context = $root;
         }
 
-        if (!is_array($context)) {
-            $found = false;
-            return null;
-        }
-
         $parts = self::explodeRef($ref);
         $result = $context;
         foreach ($parts as $key) {
-            if (array_key_exists($key, $result)) {
+            if (!is_array($result)) {
+                $found = false;
+                return null;
+            } elseif (array_key_exists($key, $result)) {
                 $result = $result[$key];
             } else {
                 $found = false;
@@ -146,7 +144,7 @@ final class Transformer {
      * @param string $str The segment to unescapeRef.
      * @return string Returns the unescaped string.
      */
-    public static function unescapeRef(string $str): string {
+    private static function unescapeRef(string $str): string {
         return str_replace(['~2', '~1', '~0'], ['$', '/', '~'], $str);
     }
 

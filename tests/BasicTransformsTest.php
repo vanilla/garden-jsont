@@ -30,8 +30,9 @@ class BasicTransformsTest extends TestCase {
                 'bar' => 'foo',
             ],
             'a~b' => 'c',
-            'a/b' => 'c',
-            'a$b' => 'c',
+            'a/b' => 'd',
+            'a$b' => 'e',
+            '~/$' => 'f'
         ];
 
         $t = new Transformer($spec);
@@ -51,12 +52,14 @@ class BasicTransformsTest extends TestCase {
             'basic ref' => [['foo' => 'nested/bar'], ['foo' => 'foo']],
             'basic nested' => [['nested' => ['foo' => '/foo']], ['nested' => ['foo' => 'baz']]],
             'escape ~' => [['a' => 'a~0b'], ['a' => 'c']],
-            'escape /' => [['a' => 'a~1b'], ['a' => 'c']],
-            'escape $' => [['a' => 'a~2b'], ['a' => 'c']],
+            'escape /' => [['a' => 'a~1b'], ['a' => 'd']],
+            'escape $' => [['a' => 'a~2b'], ['a' => 'e']],
+            'escape all' => [['a' => '~0~1~2'], ['a' => 'f']],
             'not found' => [['a' => 'xdsd'], []],
             'not found default' => [['a' => ['$ref' => 'xdsd', '$default' => 'b']], ['a' => 'b']],
             'literal' => [['a' => ['$literal' => 'abc']], ['a' => 'abc']],
-
+            'escaped dest' => [['a/b' => 'foo'], ['a/b' => 'baz']],
+            'ref to non-array' => [['a' => 'bar/baz'], []],
         ];
 
         return $r;
@@ -67,6 +70,7 @@ class BasicTransformsTest extends TestCase {
      *
      * @expectedException \Garden\JSON\InvalidSpecException
      * @expectedExceptionMessageRegExp `^Invalid spec value`
+     * @expectedExceptionCode 500
      */
     public function testInvalidSpec() {
         $t = new Transformer(['foo' => true]);
@@ -79,6 +83,7 @@ class BasicTransformsTest extends TestCase {
      *
      * @expectedException \Garden\JSON\InvalidSpecException
      * @expectedExceptionMessageRegExp `^Invalid control expression`
+     * @expectedExceptionCode 500
      */
     public function testInvalidControlExpression() {
         $t = new Transformer(['$foo' => 'bar']);
@@ -112,9 +117,23 @@ class BasicTransformsTest extends TestCase {
         $this->assertSame(['b', 'a'], $actual);
     }
 
+    /**
+     * Transformer should be callable on a non-array.
+     */
     public function testNonArrayContext() {
         $t = new Transformer('/foo');
         $actual = $t('baz');
         $this->assertSame(null, $actual);
+    }
+
+    /**
+     * Paths should be escaped in error messages.
+     *
+     * @expectedException \Garden\JSON\InvalidSpecException
+     * @expectedExceptionMessage Invalid spec value at /~0~1~2.
+     */
+    public function testEscapePath() {
+        $t = new Transformer(['~/$' => true]);
+        $t(['~/$' => 'a']);
     }
 }
