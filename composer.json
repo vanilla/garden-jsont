@@ -17,7 +17,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Garden\\JSON\\Tests\\": "src"
+            "Garden\\JSON\\Tests\\": "tests"
         }
     },
     "require-dev": {
