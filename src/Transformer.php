@@ -105,9 +105,13 @@ final class Transformer {
         switch ($expr) {
             case '$ref':
             case '$default':
-                $result = $this->resolveReference($spec['$ref'] ?? null, $data, $root, $found);
-                if (!$found) {
+                if (!isset($spec['$ref'])) {
                     $result = $spec['$default'] ?? null;
+                } else {
+                    $result = $this->resolveReference($spec['$ref'], $data, $root, $found);
+                    if (!$found) {
+                        $result = $spec['$default'] ?? null;
+                    }
                 }
                 return $result;
             case '$each':
@@ -139,7 +143,7 @@ final class Transformer {
             throw new InvalidSpecException("Missing key \$item at $path.");
         }
 
-        $each = $this->resolveReference($spec['$each'] ?? null, $data, $root, $found);
+        $each = $this->resolveReference($spec['$each'], $data, $root, $found);
         $itemSpec = $spec['$item'];
         $keySpec = $spec['$key'] ?? '$key';
 
