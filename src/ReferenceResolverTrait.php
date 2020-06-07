@@ -36,6 +36,9 @@ trait ReferenceResolverTrait {
      * @return string[] The individual parts of the reference.
      */
     private static function explodeRef(string $ref): array {
+        /**
+         * @psalm-suppress UndefinedClass
+         */
         return array_map([self::class, 'unescapeRef'], explode('/', $ref));
     }
 
