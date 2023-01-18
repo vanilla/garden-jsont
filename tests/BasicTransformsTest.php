@@ -7,6 +7,7 @@
 
 namespace Garden\JSON\Tests;
 
+use Garden\JSON\InvalidSpecException;
 use Garden\JSON\Transformer;
 use PHPUnit\Framework\TestCase;
 
@@ -67,12 +68,11 @@ class BasicTransformsTest extends TestCase {
 
     /**
      * Spec values can't be booleans.
-     *
-     * @expectedException \Garden\JSON\InvalidSpecException
-     * @expectedExceptionMessageRegExp `^Invalid spec value`
-     * @expectedExceptionCode 500
      */
     public function testInvalidSpec() {
+        $this->expectException(InvalidSpecException::class);
+        $this->expectExceptionMessageMatches("/^Invalid spec value/");
+        $this->expectExceptionCode(500);
         $t = new Transformer(['foo' => true]);
 
         $t->transform(['baz']);
@@ -80,12 +80,11 @@ class BasicTransformsTest extends TestCase {
 
     /**
      * Control expressions are a whitelist.
-     *
-     * @expectedException \Garden\JSON\InvalidSpecException
-     * @expectedExceptionMessageRegExp `^Invalid control expression`
-     * @expectedExceptionCode 500
      */
     public function testInvalidControlExpression() {
+        $this->expectException(InvalidSpecException::class);
+        $this->expectExceptionMessageMatches("/^Invalid control expression/");
+        $this->expectExceptionCode(500);
         $t = new Transformer(['$foo' => 'bar']);
         $t->transform(['baz']);
     }
@@ -128,11 +127,11 @@ class BasicTransformsTest extends TestCase {
 
     /**
      * Paths should be escaped in error messages.
-     *
-     * @expectedException \Garden\JSON\InvalidSpecException
-     * @expectedExceptionMessage Invalid spec value at /~0~1~2.
      */
     public function testEscapePath() {
+        $this->expectException(InvalidSpecException::class);
+        $this->expectExceptionMessage("Invalid spec value at /~0~1~2.");
+        $this->expectExceptionCode(500);
         $t = new Transformer(['~/$' => true]);
         $t(['~/$' => 'a']);
     }

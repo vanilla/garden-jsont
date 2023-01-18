@@ -7,6 +7,7 @@
 
 namespace Garden\JSON\Tests;
 
+use Garden\JSON\InvalidSpecException;
 use Garden\JSON\Transformer;
 use PHPUnit\Framework\TestCase;
 
@@ -61,22 +62,20 @@ class EachTest extends TestCase {
 
     /**
      * An `$item` without `$each` is an exception.
-     *
-     * @expectedException \Garden\JSON\InvalidSpecException
-     * @expectedExceptionMessageRegExp `^Missing key \$each at /`
      */
     public function testMissingEach() {
+        $this->expectException(InvalidSpecException::class);
+        $this->expectExceptionMessage("Missing key \$each at /");
         $t = new Transformer(['$item' => 'b']);
         $t([]);
     }
 
     /**
      * An `$item` without `$each` is an exception.
-     *
-     * @expectedException \Garden\JSON\InvalidSpecException
-     * @expectedExceptionMessageRegExp `^Missing key \$item at /`
      */
     public function testMissingItem() {
+        $this->expectException(InvalidSpecException::class);
+        $this->expectExceptionMessage("Missing key \$item at /");
         $t = new Transformer(['$each' => 'b']);
         $t([]);
     }
